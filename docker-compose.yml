@@ -1,7 +1,7 @@
 version: '3'
 services:
   static-assets:
-    build: ./front-end/public
+    image: saiicharan/tw-infra-static-assets:2
     expose:
       - "8000"
     ports:
@@ -9,9 +9,7 @@ services:
     depends_on:
       - front-end 
   front-end:
-    build:
-      context: ./front-end
-      dockerfile: Dockerfile
+    image: saiicharan/tw-infra-fe:2
     expose:
       - "8080"
     ports:
@@ -27,9 +25,7 @@ services:
       - quotes
       - newsfeed  
   quotes:
-    build:
-      context: ./quotes
-      dockerfile: Dockerfile
+    image: saiicharan/tw-infra-quotes:2
     hostname: quotes
     command: java -jar quotes-0.1.0-SNAPSHOT-standalone.jar
     expose:
@@ -39,9 +35,7 @@ services:
     environment:
       APP_PORT: 8081
   newsfeed:
-    build:
-      context: ./newsfeed
-      dockerfile: Dockerfile
+    image: saiicharan/tw-infra-newsfeed:2
     command: java -jar newsfeed-0.1.0-SNAPSHOT-standalone.jar
     hostname: newsfeed
     expose:

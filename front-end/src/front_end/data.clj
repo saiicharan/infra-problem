@@ -18,7 +18,7 @@
   (utils/config "NEWSFEED_SERVICE_TOKEN" ""))
 
 (def options {:as         :text
-              :timeout    1000
+              :timeout    10000
               :user-agent "front-end"})
 
 (defn- handle-response

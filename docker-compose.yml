@@ -1,0 +1,52 @@
+version: '3'
+services:
+  static-assets:
+    build: ./front-end/public
+    expose:
+      - "8000"
+    ports:
+      - '8000:8000'
+    depends_on:
+      - front-end 
+  front-end:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    expose:
+      - "8080"
+    ports:
+      - '8080:8080'
+    command: java -jar front-end-0.1.0-SNAPSHOT-standalone.jar
+    environment:
+      APP_PORT: 8080
+      STATIC_URL: 'http://localhost:8000'
+      QUOTE_SERVICE_URL: 'http://quotes:8081'
+      NEWSFEED_SERVICE_URL: 'http://newsfeed:8082'
+      NEWSFEED_SERVICE_TOKEN: T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX
+    depends_on:
+      - quotes
+      - newsfeed  
+  quotes:
+    build:
+      context: ./quotes
+      dockerfile: Dockerfile
+    hostname: quotes
+    command: java -jar quotes-0.1.0-SNAPSHOT-standalone.jar
+    expose:
+      - "8081"
+    ports:
+      - '8081:8081'
+    environment:
+      APP_PORT: 8081
+  newsfeed:
+    build:
+      context: ./newsfeed
+      dockerfile: Dockerfile
+    command: java -jar newsfeed-0.1.0-SNAPSHOT-standalone.jar
+    hostname: newsfeed
+    expose:
+      - "8082"
+    ports:
+      - '8082:8082'
+    environment:
+      APP_PORT: 8082

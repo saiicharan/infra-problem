@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-assets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static-assets
+  template:
+    metadata:
+      labels:
+        app: static-assets
+    spec:
+      containers:
+      - image: saiicharan/tw-infra-static-assets:2
+        name: static-assets
+        ports:
+        - containerPort: 8000
+        resources: {}

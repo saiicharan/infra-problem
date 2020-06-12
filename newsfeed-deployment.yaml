@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newsfeed
+spec:
+  selector:
+    matchLabels:
+      app: newsfeed
+  replicas: 1
+  template:
+    metadata: 
+      labels:
+        app: newsfeed
+    spec:
+      containers:
+      - name: newsfeed
+        image: saiicharan/tw-infra-newsfeed:2
+        args:
+          - java
+          - -jar
+          - newsfeed-0.1.0-SNAPSHOT-standalone.jar
+        env:
+        - name: APP_PORT
+          value: "8082"
+        ports:
+        - containerPort: 8082

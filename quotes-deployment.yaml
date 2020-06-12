@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quotes
+spec:
+  selector:
+    matchLabels:
+      app: quotes
+  replicas: 1
+  template:
+    metadata: 
+      labels:
+        app: quotes
+    spec:
+      containers:
+      - name: quotes
+        image: saiicharan/tw-infra-quotes:2
+        args:
+          - java
+          - -jar
+          - quotes-0.1.0-SNAPSHOT-standalone.jar
+        env:
+        - name: APP_PORT
+          value: "8081"
+        ports:
+        - containerPort: 8081
+
